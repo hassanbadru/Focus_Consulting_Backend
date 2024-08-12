@@ -97,17 +97,6 @@ class TestPostApplication:
         assert applications_data[0]["leave_end_date"] == "2021-02-01"
         # assert applications_data[0]["employee"]["first_name"] == "John"
         assert applications_data[0]["id"] is not None
-
-    # def test_search_application_by_name_endpoint(self: Self, test_client: TestClient) -> None:
-    #     first_name = ''
-    #     last_name = ''
-    #     response = test_client.get("/v1/application?employee_id={}&first_name={}&last_name={}")
-    #     assert response.status_code == 200
-    #     employee_data = response.json()
-    #     assert employee_data["id"] == 1
-    #     assert employee_data["first_name"] == "John"
-    #     assert employee_data["last_name"] == "Lennon"
-    #     assert employee_data["date_of_birth"] == "1940-10-04"
-    #     assert "secret" not in employee_data
+        
 def test_version() -> None:
     assert __version__ == "0.1.0"

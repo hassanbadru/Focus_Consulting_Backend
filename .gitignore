@@ -17,4 +17,4 @@ dist/
 # mypy
 .mypy_cache
 test.db
-venv
+venv/
