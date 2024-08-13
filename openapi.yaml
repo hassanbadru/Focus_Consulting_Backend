@@ -130,17 +130,22 @@ paths:
                   in: query
                   schema:
                       type: string
-                  description: id of employee
+                  description: ID of employee
                 - name: first_name
                   in: query
                   schema:
                       type: string
-                  description: first name of employee
+                  description: First name of employee
                 - name: last_name
                   in: query
                   schema:
                       type: string
-                  description: last name of employee
+                  description: Last name of employee
+                - name: page
+                  in: query
+                  schema:
+                      type: integer
+                  description: Current page number
             responses:
                 '200':
                     description: Found the employee
