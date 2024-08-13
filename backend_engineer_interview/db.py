@@ -4,7 +4,7 @@ import logging as logger
 
 logger = logger.getLogger('db.py')
 
-class SQLDatabaseInstance:
+class SQLDatabaseManager:
     def __init__(self, db_session, per_page_count=10):
         self.db_session = db_session
         self.per_page_count = per_page_count
@@ -82,25 +82,19 @@ class SQLDatabaseInstance:
     
     def search_leave_applications(self, employee_id=None, first_name=None, last_name=None, page=None):
         with self.db_session() as session:
-            if employee_id or first_name or last_name:
-                if employee_id:
-                    # applications = session.query(LeaveApplication).filter(LeaveApplication.employee_id == employee_id).all()
-                    query = session.query(LeaveApplication)
-                    # Apply filters
-                    if employee_id:
-                        query = query.filter(LeaveApplication.employee_id == employee_id == employee_id)
-                    if first_name:
-                        query = query.filter(LeaveApplication.first_name == first_name)
-                    if last_name:
-                        query = query.filter(LeaveApplication.last_name == last_name)
-                        
-                    if page:
-                        query = query.limit(self.per_page_count).offset((page - 1) * self.per_page_count)
-                    
-                    applications = query.all()
-                else:
-                    applications = session.query(LeaveApplication).filter()
-                if applications:
-                    return [application.as_dict() for application in applications]
+            query = session.query(LeaveApplication)
+            # Apply filters
+            if employee_id:
+                query = query.filter(LeaveApplication.employee_id == employee_id == employee_id)
+            # if first_name:
+            #     query = query.filter(LeaveApplication.employee.first_name == first_name)
+            # if last_name:
+            #     query = query.filter(LeaveApplication.first_name.last_name == last_name)
+            if page:
+                query = query.limit(self.per_page_count).offset((int(page) - 1) * self.per_page_count)
+                
+            applications = query.all()
+            if applications:
+                return [application.as_dict() for application in applications]
         return []
     

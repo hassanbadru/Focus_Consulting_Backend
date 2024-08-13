@@ -10,7 +10,7 @@ import connexion  # type: ignore
 # from connexion import lifecycle, request
 
 # from backend_engineer_interview.models import Employee
-from backend_engineer_interview.db import SQLDatabaseInstance
+from backend_engineer_interview.db import SQLDatabaseManager
 
 
 class PydanticBaseModel(pydantic.BaseModel):
@@ -46,7 +46,8 @@ class EmployeeResponse(PydanticBaseModel):
     date_of_birth: date
 
 
-sql_instance = SQLDatabaseInstance(db_session=db_session)
+sql_instance = SQLDatabaseManager(db_session=db_session)
+
 
 def get_employee(id: int) -> None:
     # ANSWER
@@ -85,8 +86,8 @@ def post_application(body: dict) -> None:
     are necessary.
     """
     # Answer
+    errorMessage = ''
     if body:
-        # employee = sql_instance.get_employee_by_id(id, ['secret'])
         employee_id = body.get('employee_id')
         leave_start_date = body.get('leave_start_date')
         leave_end_date = body.get('leave_end_date')
@@ -94,7 +95,6 @@ def post_application(body: dict) -> None:
             new_application = sql_instance.create_leave_application(employee_id=employee_id, leave_start_date=leave_start_date, leave_end_date=leave_end_date)
             if new_application:
                 return new_application, 200
-        errorMessage = ''
         if not employee_id:
             errorMessage = 'employee_id is missing;'
         if not leave_start_date:
@@ -102,6 +102,7 @@ def post_application(body: dict) -> None:
         if not leave_start_date:
             errorMessage = f'{errorMessage}leave_end_date is missing'
     return {'message': errorMessage}, 400
+
 
 def search_application() -> None:
     """

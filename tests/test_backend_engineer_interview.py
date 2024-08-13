@@ -95,7 +95,6 @@ class TestPostApplication:
         assert len(applications_data) == 1
         assert applications_data[0]["leave_start_date"] == "2021-01-01"
         assert applications_data[0]["leave_end_date"] == "2021-02-01"
-        # assert applications_data[0]["employee"]["first_name"] == "John"
         assert applications_data[0]["id"] is not None
         
 def test_version() -> None:
